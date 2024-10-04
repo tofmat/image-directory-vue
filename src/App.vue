@@ -1,17 +1,30 @@
 <template>
   <div class="app">
-    <header class="header">
-      <div class="container">
-        <h1 class="title">Unsplash Clone</h1>
-      </div>
-    </header>
     <main class="main">
       <div class="container">
-        <SearchBar @search="handleSearch" :searching="searching" />
-        <PhotoGrid :photos="photos" :loading="loading" @openModal="openModal" />
+        <div class="header-container">
+          <SearchBar
+            @search="handleSearch"
+            :searching="searching"
+            @photoSearch="handlePhotoFetch"
+          />
+        </div>
+        <div class="photo-container">
+          <PhotoGrid
+            :photos="photos"
+            :loading="loading"
+            @openModal="openModal"
+          />
+        </div>
       </div>
     </main>
-    <ImageModal :photo="selectedPhoto" :show="showModal" @close="closeModal" />
+    <div v-if="selectedPhoto">
+      <ImageModal
+        :photo="selectedPhoto"
+        :show="showModal"
+        @close="closeModal"
+      />
+    </div>
   </div>
 </template>
 
@@ -37,11 +50,14 @@ export default defineComponent({
     const showModal = ref(false);
     const searching = ref(false);
 
+    const handlePhotoFetch = async () => {
+      photos.value = await fetchPhotos(); // Fetch the search results and update photos
+    };
+
     const handleSearch = async (query: string) => {
       searching.value = true; // Start loading before making the request
       photos.value = await searchPhotos(query); // Fetch the search results and update photos
       searching.value = false;
-      console.log(photos.value); // Check if photos.value is being updated properly
     };
 
     const openModal = (photo: Photo) => {
@@ -55,7 +71,7 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      photos.value = await fetchPhotos();
+      handlePhotoFetch();
     });
 
     return {
@@ -67,7 +83,45 @@ export default defineComponent({
       openModal,
       closeModal,
       searching,
+      handlePhotoFetch,
     };
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.container {
+  .header-container {
+    padding: 4em 1em;
+    background-color: rgb(222, 227, 234);
+    @media (min-width: 640px) {
+      padding: 4em 1em;
+    }
+
+    @media (min-width: 768px) {
+      padding: 6em 1em;
+    }
+
+    @media (min-width: 1024px) {
+      padding: 8em 1em;
+    }
+  }
+  .photo-container {
+    max-width: 55rem;
+    margin: 0 auto;
+    padding: 1em;
+    margin-top: -3rem;
+    @media (min-width: 640px) {
+      margin-top: -3rem;
+    }
+
+    @media (min-width: 768px) {
+      margin-top: -4rem;
+    }
+
+    @media (min-width: 1024px) {
+      margin-top: -5rem;
+    }
+  }
+}
+</style>

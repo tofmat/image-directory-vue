@@ -1,9 +1,29 @@
 <template>
   <div class="search-bar">
     <div class="search-container">
-      <label for="search" class="sr-only">Search photos</label>
       <div class="input-wrapper">
-        <template v-if="!searching">
+        <template v-if="showingSearchResult">
+          <div class="searchResult">
+            <p class="searching-message">
+              Search Result for <span class="query">"{{ query }}"</span>
+            </p>
+            <div class="close-icon" @click="endSearch">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </div>
+          </div>
+        </template>
+        <template v-else-if="!searching && !showingSearchResult">
           <svg
             class="search-icon"
             xmlns="http://www.w3.org/2000/svg"
@@ -21,12 +41,14 @@
             v-model="query"
             @keyup.enter="startSearch"
             class="search-input"
-            placeholder="Search photos"
+            placeholder="Search for photo"
             type="search"
           />
         </template>
-        <template v-else>
-          <p class="searching-message">Searching for "{{ query }}"...</p>
+        <template v-else-if="searching">
+          <p class="searching-message">
+            Searching for <span class="query">"{{ query }}"</span>
+          </p>
         </template>
       </div>
     </div>
@@ -38,7 +60,7 @@ import { defineComponent, ref, watch } from "vue";
 
 export default defineComponent({
   name: "SearchBar",
-  emits: ["search", "setLoading"],
+  emits: ["search", "photoSearch"],
   props: {
     searching: {
       type: Boolean,
@@ -47,15 +69,23 @@ export default defineComponent({
   },
   setup(_, { emit }) {
     const query = ref("");
+    const showingSearchResult = ref(false);
     const startSearch = () => {
-      console.log(query.value);
-
+      showingSearchResult.value = true;
       emit("search", query.value);
+    };
+
+    const endSearch = () => {
+      showingSearchResult.value = false;
+      query.value = "";
+      emit("photoSearch");
     };
 
     return {
       query,
       startSearch,
+      showingSearchResult,
+      endSearch,
     };
   },
 });
@@ -63,15 +93,23 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .search-bar {
-  margin-bottom: 2rem;
-
   .search-container {
-    max-width: 36rem;
+    max-width: 60rem;
     margin: 0 auto;
 
     .input-wrapper {
       position: relative;
-
+      .searchResult {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        .close-icon {
+          width: 20px;
+          height: 20px;
+          cursor: pointer;
+        }
+      }
       .search-icon {
         position: absolute;
         left: 0.75rem;
@@ -85,14 +123,16 @@ export default defineComponent({
 
       .search-input {
         display: block;
+        height: 54px;
         width: 100%;
         padding: 0.5rem 0.75rem 0.5rem 2.5rem;
-        border: 1px solid #d1d5db;
-        border-radius: 0.375rem;
-        font-size: 0.875rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
         line-height: 1.25rem;
         color: #111827;
         background-color: #ffffff;
+        outline: none;
 
         &::placeholder {
           color: #9ca3af;
@@ -100,13 +140,20 @@ export default defineComponent({
 
         &:focus {
           outline: none;
-          border-color: #6366f1;
+          border-color: none;
         }
       }
 
       .searching-message {
-        font-size: 1rem;
-        color: #6b7280;
+        font-size: 2rem;
+        margin: 0;
+        color: #1e2738;
+        .query {
+          color: #9ca3af;
+        }
+        @media (min-width: 768px) {
+          font-size: 3rem;
+        }
       }
     }
   }

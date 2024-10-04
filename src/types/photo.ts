@@ -29,6 +29,7 @@ export interface Photo {
       photos: string;
       likes: string;
     };
+    location: string;
   };
   current_user_collections: any[];
   urls: {

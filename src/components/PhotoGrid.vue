@@ -2,13 +2,15 @@
   <div class="photo-grid">
     <template v-if="loading">
       <div v-for="i in 8" :key="i" class="grid-item loading-item">
-        <div class="loading-image"></div>
-        <div class="loading-text">
-          <div class="loading-line"></div>
-          <div class="loading-line short"></div>
+        <div class="loading-image">
+          <div class="loading-text">
+            <div class="loading-line"></div>
+            <div class="loading-line short"></div>
+          </div>
         </div>
       </div>
     </template>
+
     <template v-else>
       <div v-for="photo in photos" :key="photo.id" class="grid-item">
         <div class="photo-wrapper" @click="$emit('openModal', photo)">
@@ -19,8 +21,8 @@
           />
           <div class="photo-info">
             <p class="photographer">{{ photo.user.name }}</p>
-            <p v-if="photo?.location?.name" class="location">
-              {{ photo.location.name }}
+            <p class="location">
+              {{ photo.user.location ?? "--" }}
             </p>
           </div>
         </div>
@@ -51,7 +53,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .photo-grid {
-  column-gap: 1rem;
+  column-gap: 1.5rem;
   column-count: 1;
 
   @media (min-width: 640px) {
@@ -63,12 +65,12 @@ export default defineComponent({
   }
 
   @media (min-width: 1024px) {
-    column-count: 4;
+    column-count: 3;
   }
 
   .grid-item {
     break-inside: avoid;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .photo-wrapper {
@@ -87,47 +89,54 @@ export default defineComponent({
     }
 
     .photo-info {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
       padding: 1rem;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
       color: #ffffff;
 
       .photographer {
-        font-weight: 600;
-        margin-bottom: 0.25rem;
+        margin: 0;
+        font-size: 14px;
       }
 
       .location {
-        font-size: 0.875rem;
+        font-size: 12px;
+        margin: 0;
+        opacity: 0.8;
       }
     }
   }
 
   .loading-item {
     .loading-image {
-      width: 100%;
       height: 200px;
       background-color: #e5e7eb;
       border-radius: 0.5rem;
       animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
+      display: flex;
+      align-items: end;
+      padding: 2rem;
+      .loading-text {
+        margin-top: 0.5rem;
+        width: 100%;
+        .loading-line {
+          height: 1.2rem;
+          width: 75%;
+          background-color: #cbcecf;
+          border-radius: 0.25rem;
+          margin-bottom: 0.5rem;
+          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
-    .loading-text {
-      margin-top: 0.5rem;
-
-      .loading-line {
-        height: 1rem;
-        width: 75%;
-        background-color: #e5e7eb;
-        border-radius: 0.25rem;
-        margin-bottom: 0.5rem;
-        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-
-        &.short {
-          width: 50%;
+          &.short {
+            width: 50%;
+          }
         }
       }
     }
