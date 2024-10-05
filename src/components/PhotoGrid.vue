@@ -15,7 +15,7 @@
       <div v-for="photo in photos" :key="photo.id" class="grid-item">
         <div class="photo-wrapper" @click="$emit('openModal', photo)">
           <img
-            :src="photo.urls.regular"
+            :src="photo.urls.small"
             :alt="photo.alt_description"
             class="photo"
           />
@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import type { Photo } from "../types/Photo";
+import type { Photo } from "../types/photo.ts";
 
 export default defineComponent({
   name: "PhotoGrid",

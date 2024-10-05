@@ -11,9 +11,10 @@
           }"
         >
           <img
-            :src="photo?.urls.full"
+            :src="photo?.urls.regular"
             :alt="photo?.alt_description"
             class="modal-image"
+            loading="lazy"
           />
         </div>
         <div class="modal-user">
@@ -29,7 +30,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import type { Photo } from "../types/Photo";
+import type { Photo } from "../types/photo";
 
 export default defineComponent({
   name: "ImageModal",

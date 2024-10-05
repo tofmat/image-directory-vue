@@ -1,0 +1,1 @@
+{"root":["./src/main.ts","./src/vite-env.d.ts","./src/composables/useunsplashapi.ts","./src/types/photo.ts","./src/app.vue","./src/components/imagemodal.vue","./src/components/photogrid.vue","./src/components/searchbar.vue"],"version":"5.6.2"}

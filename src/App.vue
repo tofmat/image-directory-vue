@@ -34,7 +34,7 @@ import SearchBar from "./components/SearchBar.vue";
 import PhotoGrid from "./components/PhotoGrid.vue";
 import ImageModal from "./components/ImageModal.vue";
 import { useUnsplashApi } from "./composables/useUnsplashApi";
-import type { Photo } from "./types/Photo";
+import type { Photo } from "./types/photo";
 
 export default defineComponent({
   name: "App",
