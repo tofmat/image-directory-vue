@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade">
+  <Transition name="fade">
     <div v-if="show" class="modal-overlay" @click="$emit('close')">
       <div class="modal-content" @click.stop>
         <div
@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-  </transition>
+  </Transition>
 </template>
 
 <script lang="ts">
@@ -48,7 +48,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -123,14 +123,24 @@ export default defineComponent({
     }
   }
 }
-
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+  transform: scale(0.95);
+}
+
+.fade-enter-to {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.fade-leave-from {
+  opacity: 1;
+  transform: scale(1);
 }
 </style>

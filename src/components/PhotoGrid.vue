@@ -71,6 +71,26 @@ export default defineComponent({
   .grid-item {
     break-inside: avoid;
     margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.5s ease forwards;
+
+    &:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    &:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .photo-wrapper {
@@ -80,6 +100,11 @@ export default defineComponent({
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -1px rgba(0, 0, 0, 0.06);
     cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+    }
 
     .photo {
       width: 100%;
@@ -100,6 +125,7 @@ export default defineComponent({
       padding: 1rem;
       background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
       color: #ffffff;
+      transition: opacity 0.3s ease-in-out;
 
       .photographer {
         margin: 0;
@@ -113,6 +139,10 @@ export default defineComponent({
         opacity: 0.8;
       }
     }
+
+    &:hover .photo-info {
+      opacity: 0.9;
+    }
   }
 
   .loading-item {
@@ -124,9 +154,11 @@ export default defineComponent({
       display: flex;
       align-items: end;
       padding: 2rem;
+
       .loading-text {
         margin-top: 0.5rem;
         width: 100%;
+
         .loading-line {
           height: 1.2rem;
           width: 75%;
@@ -141,16 +173,6 @@ export default defineComponent({
         }
       }
     }
-  }
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
   }
 }
 </style>

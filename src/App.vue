@@ -18,18 +18,14 @@
         </div>
       </div>
     </main>
-    <div v-if="selectedPhoto">
-      <ImageModal
-        :photo="selectedPhoto"
-        :show="showModal"
-        @close="closeModal"
-      />
-    </div>
+
+    <ImageModal :photo="selectedPhoto" :show="showModal" @close="closeModal" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
+import Test from "./components/Test.vue";
 import SearchBar from "./components/SearchBar.vue";
 import PhotoGrid from "./components/PhotoGrid.vue";
 import ImageModal from "./components/ImageModal.vue";
