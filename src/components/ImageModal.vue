@@ -76,7 +76,9 @@ export default defineComponent({
       display: flex;
       justify-content: center;
       max-height: 500px;
+      border-top-radius: inherit;
       .modal-image {
+        border-radius: inherit;
         width: 100%;
         height: auto;
         object-fit: contain;
