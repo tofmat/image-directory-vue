@@ -31,7 +31,6 @@
             @keyup.enter="startSearch"
             class="search-input"
             placeholder="Search for photo"
-            type="search"
           />
         </template>
         <template v-else-if="searching">
@@ -116,8 +115,8 @@ export default defineComponent({
 
       .search-input {
         display: block;
-        height: 54px;
-        width: 100%;
+        height: 40px;
+        width: -webkit-fill-available;
         padding: 0.5rem 0.75rem 0.5rem 2.5rem;
         border: none;
         border-radius: 8px;
