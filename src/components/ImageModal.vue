@@ -18,9 +18,9 @@
           />
         </div>
         <div class="modal-user">
-          <p class="photographer">{{ photo.user.name }}</p>
+          <p class="photographer">{{ photo?.user.name }}</p>
           <p class="location">
-            {{ photo.user.location ?? "--" }}
+            {{ photo?.user.location ?? "--" }}
           </p>
         </div>
       </div>
@@ -40,7 +40,7 @@ export default defineComponent({
       required: true,
     },
     photo: {
-      type: Object as PropType<Photo>,
+      type: Object as PropType<Photo | null>,
       required: true,
     },
   },
