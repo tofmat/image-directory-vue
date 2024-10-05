@@ -51,12 +51,12 @@ export default defineComponent({
     const searching = ref(false);
 
     const handlePhotoFetch = async () => {
-      photos.value = await fetchPhotos(); // Fetch the search results and update photos
+      photos.value = await fetchPhotos();
     };
 
     const handleSearch = async (query: string) => {
-      searching.value = true; // Start loading before making the request
-      photos.value = await searchPhotos(query); // Fetch the search results and update photos
+      searching.value = true;
+      photos.value = await searchPhotos(query);
       searching.value = false;
     };
 
