@@ -104,6 +104,7 @@ export default defineComponent({
       .photographer {
         margin: 0;
         font-size: 14px;
+        text-transform: capitalize;
       }
 
       .location {

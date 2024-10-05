@@ -2,13 +2,26 @@
   <transition name="fade">
     <div v-if="show" class="modal-overlay" @click="$emit('close')">
       <div class="modal-content" @click.stop>
-        <h3 class="modal-title">{{ photo?.user.name }}</h3>
-        <img
-          :src="photo?.urls.full"
-          :alt="photo?.alt_description"
-          class="modal-image"
-        />
-        <button class="modal-close" @click="$emit('close')">Close</button>
+        <div
+          class="modal-image-container"
+          :style="{
+            backgroundColor: photo?.color,
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+          }"
+        >
+          <img
+            :src="photo?.urls.full"
+            :alt="photo?.alt_description"
+            class="modal-image"
+          />
+        </div>
+        <div class="modal-user">
+          <p class="photographer">{{ photo.user.name }}</p>
+          <p class="location">
+            {{ photo.user.location ?? "--" }}
+          </p>
+        </div>
       </div>
     </div>
   </transition>
@@ -46,27 +59,47 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 20px;
 
   .modal-content {
     background-color: #ffffff;
-    padding: 1.5rem;
     border-radius: 0.5rem;
-    max-width: 90%;
-    max-height: 90%;
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    max-height: 900px;
     overflow-y: auto;
+    position: relative;
 
-    .modal-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: #111827;
+    .modal-image-container {
+      display: flex;
+      justify-content: center;
+      max-height: 500px;
+      .modal-image {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+      }
     }
 
-    .modal-image {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      margin-bottom: 1rem;
+    .modal-user {
+      padding: 1.5rem;
+      margin: 0;
+      color: #111827;
+
+      .photographer {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 600;
+        text-transform: capitalize;
+      }
+
+      .location {
+        font-size: 16px;
+        margin: 0;
+        margin-top: 10px;
+        opacity: 0.6;
+      }
     }
 
     .modal-close {
